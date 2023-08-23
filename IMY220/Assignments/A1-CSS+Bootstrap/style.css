@@ -1,0 +1,15 @@
+.card-body{
+    font-family: 'Nunito';
+}
+
+.card-title{
+    font-family: 'Roboto Slab';
+}
+
+@media screen and (min-width: 992px){
+
+    button:hover i{
+        transform: translateX(8px) rotate(90deg);
+        transition: transform 0.5s;
+    }
+}

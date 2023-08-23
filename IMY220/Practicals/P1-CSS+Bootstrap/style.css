@@ -1,0 +1,20 @@
+:root{
+    --lGreen: lightgreen;
+    --red: red;
+}
+
+#r1 > * {
+    border-radius: 8px;
+}
+
+div[class^="col-"] {
+    border: var(--red) solid 1px;
+}
+
+.r1Cols:nth-child(odd) {
+    background-color: var(--lGreen);
+}
+
+.r2Cols:nth-child(even) {
+    background-color: var(--lGreen);
+}

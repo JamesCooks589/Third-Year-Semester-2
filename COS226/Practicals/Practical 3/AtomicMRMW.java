@@ -25,7 +25,7 @@ public class AtomicMRMW<T> implements Register<T>{
 
     public T read() {
         StampedValue<T> max = StampedValue.MIN_VALUE;
-        //Read the table
+        //Find highest stamp
         for (int i = 0; i < a_table.length; i++) {
             max = StampedValue.max(max, a_table[i]);
         }

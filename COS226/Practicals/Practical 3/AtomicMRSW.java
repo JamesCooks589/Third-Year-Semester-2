@@ -21,14 +21,17 @@ public class AtomicMRSW<T> implements Register<T> {
     public T read() {
         int me = Integer.parseInt(Thread.currentThread().getName().substring(7));
        StampedValue<T> value = a_table[me][me];
-       //Read the table
+       //Read the column
        for (int i = 0; i < a_table.length; i++) {
            value = StampedValue.max(value, a_table[i][me]);
        }
+       //write the row
          for (int i = 0; i < a_table.length; i++) {
               a_table[me][i] = value;
          }
+         //Output the value
          System.out.println("(reader) " + Thread.currentThread().getName() + ": " + value.value);
+
         return value.value;
     }
 
@@ -36,10 +39,11 @@ public class AtomicMRSW<T> implements Register<T> {
         long stamp = lastStamp.get() + 1;
         lastStamp.set(stamp);
         StampedValue<T> value = new StampedValue<T>(stamp, v);
-        //Write the table
+        //Write the table on the diagonal
         for (int i = 0; i < a_table.length; i++) {
             a_table[i][i] = value;
         }
+        //Output the value
         System.out.println("(writer) " + Thread.currentThread().getName() + ": " + value.value);
     }
 }

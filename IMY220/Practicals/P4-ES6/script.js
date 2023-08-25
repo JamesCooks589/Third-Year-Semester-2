@@ -59,6 +59,19 @@ function PigLatinEncrypt(str)
 
 }//end PigLatinEncrypt
 
+const checkUniqueLetters =  (input) => {
+	//Convert string to array of letters
+	const uniqueCount = input.split('').reduce((count, letter) => {
+		//If letter is not in the array, add it
+		if (!count.includes(letter)) {
+			count.push(letter);
+		}
+		return count;
+	}, []).length;
+
+	return `The word ${input} has ${uniqueCount} unique letters`;
+}
+
 
 const checker = new FactorialChecker();
 
@@ -75,4 +88,9 @@ document.getElementById("GenerateFactorialList").onclick = function()
 document.getElementById("PigLatinEncrypt").onclick = function()
 {
 	document.getElementById("PigLatinResult").innerHTML = PigLatinEncrypt(document.getElementById("SentenceToConvert").value);
+}
+
+document.getElementById("checkRecurringChars").onclick = function()
+{
+	document.getElementById("recurringCharsResult").innerHTML = checkUniqueLetters(document.getElementById("charChecker").value);
 }

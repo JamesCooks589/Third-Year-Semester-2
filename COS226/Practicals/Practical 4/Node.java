@@ -15,7 +15,7 @@ public class Node extends Thread {
 		{
 			//[Thread-Name][Request-Number]printingrequest.
 			System.out.println(Thread.currentThread().getName() + " " + (i + 1) + " printing request.");
-			p.Print();
+			p.Print(i+1);
 		}
 	}
 }

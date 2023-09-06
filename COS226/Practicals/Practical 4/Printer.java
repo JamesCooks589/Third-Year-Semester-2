@@ -9,7 +9,7 @@ public class Printer {
 		l = new Timeout();
 	}
 
-	public void Print(){
+	public void Print(int reqNum){
 		//l.lock();
 		try {
 			l.tryLock(500, java.util.concurrent.TimeUnit.MILLISECONDS);
@@ -18,7 +18,7 @@ public class Printer {
 		}
 		try{
 			//Print
-			System.out.println(Thread.currentThread().getName() + " printing: LMAO look at this funny random number: " + (int) (Math.random() * 1000) + ". :skullEmoji:");
+			System.out.println("["+Thread.currentThread().getName() +"] [Request Number: " + reqNum + "] printing: LMAO look at this funny random number: " + (int) (Math.random() * 1000) + ". :skullEmoji:");
 			//Sleep between 200 and 1000 ms
 			int randomSleep = (int) (Math.random() * 800) + 200;
 			Thread.sleep(randomSleep);

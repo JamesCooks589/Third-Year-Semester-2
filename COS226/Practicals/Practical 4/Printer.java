@@ -5,17 +5,17 @@ public class Printer {
 
 	//Constructor for Printer
 	public Printer(){
-		//l = new MCSQueue();
-		l = new Timeout();
+		l = new MCSQueue();
+		//l = new Timeout();
 	}
 
 	public void Print(int reqNum){
-		//l.lock();
-		try {
-			l.tryLock(500, java.util.concurrent.TimeUnit.MILLISECONDS);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		l.lock();
+		// try {
+		// 	l.tryLock(100, java.util.concurrent.TimeUnit.MILLISECONDS);
+		// } catch (InterruptedException e) {
+		// 	e.printStackTrace();
+		// }
 		try{
 			//Print
 			System.out.println("["+Thread.currentThread().getName() +"] [Request Number: " + reqNum + "] printing: LMAO look at this funny random number: " + (int) (Math.random() * 1000) + ". :skullEmoji:");

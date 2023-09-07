@@ -4,16 +4,16 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Timeout implements Lock {
-    static QNode AVAILABLE = new QNode();
-    AtomicReference<QNode> tail;
-    ThreadLocal<QNode> myNode;
+    static Qnode AVAILABLE = new Qnode();
+    AtomicReference<Qnode> tail;
+    ThreadLocal<Qnode> myNode;
 
     //Constructor for TOLock
     public Timeout(){
-        tail = new AtomicReference<QNode>(null);
-        myNode = new ThreadLocal<QNode>(){
-            protected QNode initialValue(){
-                return new QNode();
+        tail = new AtomicReference<Qnode>(null);
+        myNode = new ThreadLocal<Qnode>(){
+            protected Qnode initialValue(){
+                return new Qnode();
             }
         };
     }
@@ -21,15 +21,15 @@ public class Timeout implements Lock {
     public boolean tryLock(long time, TimeUnit unit) throws InterruptedException {
         long startTime = System.currentTimeMillis();
         long patience = TimeUnit.MILLISECONDS.convert(time, unit);
-        QNode qnode = new QNode();
+        Qnode qnode = new Qnode();
         myNode.set(qnode);
         qnode.pred = null;
-        QNode myPred = tail.getAndSet(qnode);
+        Qnode myPred = tail.getAndSet(qnode);
         if (myPred == null || myPred.pred == AVAILABLE) {
             return true;
         }
         while (System.currentTimeMillis() - startTime < patience) {
-            QNode predPred = myPred.pred;
+            Qnode predPred = myPred.pred;
             if (predPred == AVAILABLE) {
                 return true;
             } else if (predPred != null) {
@@ -43,7 +43,7 @@ public class Timeout implements Lock {
     }
 
     public void unlock() {
-        QNode qnode = myNode.get();
+        Qnode qnode = myNode.get();
         if(!tail.compareAndSet(qnode, null)){
             qnode.pred = AVAILABLE;
         }
@@ -76,12 +76,11 @@ public class Timeout implements Lock {
         throw new UnsupportedOperationException("Unimplemented method 'tryLock'");
     }
     
-
+static class Qnode{
+    volatile public Qnode pred = null;
+    }
    
 }
 
-class QNode {
-    public QNode pred = null;
-}
 
 

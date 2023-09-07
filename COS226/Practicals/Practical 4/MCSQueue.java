@@ -72,14 +72,7 @@ public class MCSQueue implements Lock{
 
 
 class Qnode{
-    public boolean locked = false;
-    public Qnode next = null;
-    public int requestNumber;
-    public String message;
-
-    // public Qnode(int requestNumber, String message){
-    //     this.requestNumber = requestNumber;
-    //     this.message = message;
-    // }
+    volatile boolean locked = false;
+    Qnode next = null;
 
 }

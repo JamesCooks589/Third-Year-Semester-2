@@ -2,12 +2,12 @@
 #include <string>
 using namespace std;
 
-class bank
+class Bank
 {
     private:
         int Gold;
     public:
-        bank(int initialGold);
+        Bank(int initialGold);
         int getGold();
         void setGold(int gold);
         void performTransaction(int amount, bool isDeposit);

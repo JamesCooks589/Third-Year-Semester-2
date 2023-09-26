@@ -9,6 +9,5 @@ class DepthFirstTraversal : public Iterator
         int x, y;
     public:
         DepthFirstTraversal(Lair* lair);
-        bool hasNext();
         void* next();
 };

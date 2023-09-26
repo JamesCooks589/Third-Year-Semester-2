@@ -1,5 +1,8 @@
 #pragma once
+#include <iostream>
 #include <string>
+#include "Iterator.h"
+#include "lair.h"
 using namespace std;
 
 class hero
@@ -13,5 +16,4 @@ class hero
         string getType();
         bool getIsAlive();
         int getHealth();
-        void move(string type);
 };

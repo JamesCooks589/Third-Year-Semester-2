@@ -21,6 +21,7 @@ class Menu {
         void increaseLairSize();
         void decreaseLairSize();
         void getGold();
+        void startGame();
 
 
 };

@@ -11,8 +11,9 @@ class Menu {
     private:
         Lair* lair;
         hero* hero;
+        Engine* engine;
     public:
-        Menu();
+        Menu(Engine* engine);
         ~Menu();
         void upgradeTrap();
         void removeUpgradeTrap(string trapName);

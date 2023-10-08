@@ -3,5 +3,6 @@
 class Iterator
 {
     public:
-        virtual void* next() = 0;
+    //Returns direction hero has to move
+        virtual string next() = 0;
 };

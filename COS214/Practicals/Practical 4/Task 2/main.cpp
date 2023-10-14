@@ -8,6 +8,8 @@ int main() {
     std::cout << orm.select("users") << std::endl;  //outputs: SELECT * FROM users
 
     newDATABASE new_db;
+
+    std::cout<<new_db.select("users")<<std::endl;
     databaseADAPTER adapter(&new_db);
     std::cout << adapter.select("users") << std::endl;  //outputs: SELECT * FROM users
 

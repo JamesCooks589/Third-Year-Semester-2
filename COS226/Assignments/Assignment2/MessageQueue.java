@@ -1,14 +1,12 @@
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.HashMap;
 
 public class MessageQueue {
     private final BlockingQueue<Message> queue = new LinkedBlockingQueue<>();
-    private final Map<String, Lock> locks = new HashMap<>();
+    private final Map<String, Object> locks = new HashMap<>(); // Use Object as a simple lock
     private final Reader[] readers = new Reader[Client.NUM_CLIENTS];
 
     public void addReader(Reader reader) {
@@ -20,9 +18,7 @@ public class MessageQueue {
     }
 
     public void sendMessage(Message message) {
-        Lock lock = getLock(message.getRecipient());
-        lock.lock();
-        try {
+        synchronized (getLock(message.getRecipient())) {
             try {
                 queue.put(message);
             } catch (InterruptedException e) {
@@ -32,15 +28,11 @@ public class MessageQueue {
             if (reader != null) {
                 reader.notifyNewMessage();
             }
-        } finally {
-            lock.unlock();
         }
     }
 
     public Message receiveMessage(String recipient) {
-        Lock lock = getLock(recipient);
-        lock.lock();
-        try {
+        synchronized (getLock(recipient)) {
             Iterator<Message> iterator = queue.iterator();
             while (iterator.hasNext()) {
                 Message message = iterator.next();
@@ -49,14 +41,12 @@ public class MessageQueue {
                     return message;
                 }
             }
-        } finally {
-            lock.unlock();
         }
         return null;
     }
 
-    private Lock getLock(String recipient) {
-        locks.putIfAbsent(recipient, new ReentrantLock());
+    private Object getLock(String recipient) {
+        locks.putIfAbsent(recipient, new Object());
         return locks.get(recipient);
     }
 }

@@ -3,10 +3,12 @@ import java.util.UUID;
 public class Main {
     public static void main(String[] args) {
         MessageQueue server = new MessageQueue();
+        BakeryLock bakeryLock = new BakeryLock(Client.NUM_CLIENTS); // Create the BakeryLock
+
         Client[] clients = new Client[Client.NUM_CLIENTS];
 
         for (int i = 0; i < Client.NUM_CLIENTS; i++) {
-            clients[i] = new Client("Client " + (i + 1), server);
+            clients[i] = new Client("Client " + (i + 1), server, bakeryLock); // Pass BakeryLock
             clients[i].start();
         }
 

@@ -1,34 +1,42 @@
-//James Cooks u21654680
-// DateForm.js
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const DateForm = ({ onDateChange }) => {
-  const [newDate, setNewDate] = useState('');
+class DateForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      newDate: '',
+    };
+  }
 
-  const handleDateChange = (e) => {
-    const date = e.target.value;
-    setNewDate(date);
-    onDateChange(date);
+  handleDateChange = (e) => {
+    const dateWithDashes = e.target.value;
+    const dateWithSlashes = dateWithDashes.replace(/-/g, '/');
+    this.setState({ newDate: dateWithSlashes });
+    this.props.onDateChange(dateWithSlashes);
   };
 
-  return (
-    <div>
-      <form>
-        <div className="form-group">
-          <label htmlFor="newDate">Enter a Date:</label>
-          <input
-            type="date"
-            id="newDate"
-            className="form-control"
-            value={newDate}
-            onChange={handleDateChange}
-          />
-        </div>
-      </form>
-    </div>
-  );
-};
+  render() {
+    const { newDate } = this.state;
+
+    return (
+      <div>
+        <form>
+          <div className="form-group">
+            <label htmlFor="newDate">Enter a Date:</label>
+            <input
+              type="date"
+              id="newDate"
+              className="form-control"
+              value={newDate}
+              onChange={this.handleDateChange}
+            />
+          </div>
+        </form>
+      </div>
+    );
+  }
+}
 
 DateForm.propTypes = {
   onDateChange: PropTypes.func.isRequired,

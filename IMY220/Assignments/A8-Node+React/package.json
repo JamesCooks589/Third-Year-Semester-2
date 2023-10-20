@@ -2,7 +2,7 @@
   "name": "assignment_8",
   "version": "1.0.0",
   "description": "An assignment covering React + Node",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "build": "webpack && babel server.js -d dist",
     "start": "npm run build && node dist/server.js"

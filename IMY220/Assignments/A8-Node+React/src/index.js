@@ -17,7 +17,8 @@ var articles= [
 
 ReactDOM.render(
 	<React.StrictMode>
-	  <ArticleList articles={articles} theDate="2023/09/03" /> {/* Adjust the date as needed */}
+		{/* Also included error message when no articles are found */}
+	  <ArticleList articles={articles} theDate="2023/09/03" />
 	</React.StrictMode>,
 	document.getElementById('root')
   );

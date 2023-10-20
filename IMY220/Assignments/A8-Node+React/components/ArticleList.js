@@ -1,37 +1,46 @@
-//James Cooks u21654680
-// ArticleList.js
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Article from './Article';
-import DateForm from './DateForm'; // Import the DateForm component
+import DateForm from './DateForm';
 
-const ArticleList = ({ articles }) => {
-  const [currentDate, setCurrentDate] = useState('2023/09/03');
+class ArticleList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentDate: props.theDate,
+    };
+  }
 
-  const handleDateChange = (newDate) => {
-    setCurrentDate(newDate);
+  handleDateChange = (newDate) => {
+    this.setState({ currentDate: newDate });
   };
 
-  const filteredArticles = articles.filter((article) => article.date === currentDate);
+  render() {
+    const { articles } = this.props;
+    const { currentDate } = this.state;
 
-  return (
-    <div>
-      <DateForm onDateChange={handleDateChange} />
-      {filteredArticles.length > 0 && (
-        <div>
-          <h2>Articles on {currentDate}</h2>
-          <div className="row">
-            {filteredArticles.map((article, index) => (
-              <div key={index} className="col-md-4">
-                <Article article={article} />
-              </div>
-            ))}
+    const filteredArticles = articles.filter((article) => article.date === currentDate);
+
+    return (
+      <div>
+        <DateForm onDateChange={this.handleDateChange} />
+        <h2>Articles on {currentDate}</h2>
+        {filteredArticles.length === 0 && <h3>No articles found for {currentDate}</h3>}
+        {filteredArticles.length > 0 && (
+          <div>
+            <div className="row">
+              {filteredArticles.map((article, index) => (
+                <div key={index} className="col-md-4">
+                  <Article article={article} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
-    </div>
-  );
-};
+        )}
+      </div>
+    );
+  }
+}
 
 ArticleList.propTypes = {
   articles: PropTypes.arrayOf(

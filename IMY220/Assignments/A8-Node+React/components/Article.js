@@ -3,8 +3,8 @@ import React from 'react';
 
 const Article = ({ article }) => {
   return (
-    <div class="card mb-3">
-      <div class="card-header">
+    <div className="card mb-3">
+      <div className="card-header">
         <h3>{article.name}</h3>
       </div>
       <div className="card-body">

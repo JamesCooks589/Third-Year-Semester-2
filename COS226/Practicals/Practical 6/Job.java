@@ -23,7 +23,7 @@ public class Job {
     }
 
     //Setters
-    public void Approve() {
+    public void approve() {
         this.approved = true;
     }
 
